@@ -17,10 +17,11 @@ class ToDoTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 25.0, left: 25.0, right: 25.0),
       child: Container(
-        height: 60,
+        height: 75,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.deepPurple.shade500,
+          borderRadius: BorderRadius.circular(8),
+          color: Colors.deepPurple.shade400,
         ),
         child: Row(
           children: [
@@ -30,10 +31,15 @@ class ToDoTile extends StatelessWidget {
               activeColor: Colors.black,
             ),
             Text(
-              todoItem,
-              style: const TextStyle(
+              todoItem.length > 20
+                  ? '${todoItem.substring(0, 20)} ...'
+                  : todoItem,
+              style: TextStyle(
                 color: Colors.white,
-                fontSize: 16,
+                fontSize: 18,
+                decoration: isCompleted
+                    ? TextDecoration.lineThrough
+                    : TextDecoration.none,
               ),
             ),
           ],

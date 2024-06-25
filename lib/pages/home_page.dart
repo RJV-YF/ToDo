@@ -10,6 +10,20 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  // list to hold todos
+  List todoList = [
+    ["Complete the app", false],
+    ["Do excercise", true],
+    ["Get a hair cut", false],
+    ["Take mom to shopping and then take sister to tuition", false],
+  ];
+  // check box tapped
+  void onTapped(bool? value, int index) {
+    setState(() {
+      todoList[index][1] = !todoList[index][1];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,10 +40,13 @@ class _HomeState extends State<Home> {
         ),
         centerTitle: true,
       ),
-      body: ToDoTile(
-        todoItem: 'Complete the app',
-        isCompleted: true,
-        onChanged: (p0) => '',
+      body: ListView.builder(
+        itemCount: todoList.length,
+        itemBuilder: (context, index) => ToDoTile(
+          todoItem: todoList[index][0],
+          isCompleted: todoList[index][1],
+          onChanged: (value) => onTapped(value, index),
+        ),
       ),
     );
   }
