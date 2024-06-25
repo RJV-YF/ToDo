@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo/components/dialog_box.dart';
 
 import '../components/todo_tile.dart';
 
@@ -17,11 +18,21 @@ class _HomeState extends State<Home> {
     ["Get a hair cut", false],
     ["Take mom to shopping and then take sister to tuition", false],
   ];
+  TextEditingController controller = TextEditingController();
   // check box tapped
   void onTapped(bool? value, int index) {
     setState(() {
       todoList[index][1] = !todoList[index][1];
     });
+  }
+
+  // save new todo
+  void saveNewTodo() {
+    setState(() {
+      todoList.add([controller.text, false]);
+    });
+    controller.clear();
+    Navigator.of(context).pop();
   }
 
   @override
@@ -46,6 +57,24 @@ class _HomeState extends State<Home> {
           todoItem: todoList[index][0],
           isCompleted: todoList[index][1],
           onChanged: (value) => onTapped(value, index),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return DialogBox(
+                controller: controller,
+                onPressed: saveNewTodo,
+              );
+            },
+          );
+        },
+        child: const Icon(
+          Icons.add,
+          color: Colors.black,
         ),
       ),
     );
