@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo/components/dialog_box.dart';
+import 'package:todo/database/database.dart';
 
 import '../components/todo_tile.dart';
 
@@ -11,34 +13,53 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  // hive instance
+  final myBox = Hive.box('mybox');
+
+  ToDoDataBase db = ToDoDataBase();
+
   // list to hold todos
-  List todoList = [
-    ["Complete the app", false],
-    ["Do excercise", true],
-    ["Get a hair cut", false],
-    ["Take mom to shopping and then take sister to tuition", false],
-  ];
+  // List todoList = [
+  //   ["Complete the app", false],
+  //   ["Do excercise", true],
+  //   ["Get a hair cut", false],
+  //   ["Take mom to shopping and then take sister to tuition", false],
+  // ];
   TextEditingController controller = TextEditingController();
+
+  @override
+  void initState() {
+    if (myBox.get('TODOLIST') == null) {
+      db.createInitialData();
+    } else {
+      db.loadData();
+    }
+    super.initState();
+  }
+
   // check box tapped
   void onTapped(bool? value, int index) {
     setState(() {
-      todoList[index][1] = !todoList[index][1];
+      db.todoList[index][1] = !db.todoList[index][1];
     });
+    db.updateDatabase();
   }
 
   // save new todo
   void saveNewTodo() {
     setState(() {
-      todoList.add([controller.text, false]);
+      db.todoList.add([controller.text, false]);
     });
     controller.clear();
     Navigator.of(context).pop();
+    db.updateDatabase();
   }
 
   void deleteTask(index) {
     setState(() {
-      todoList.removeAt(index);
+      db.todoList.removeAt(index);
     });
+    db.updateDatabase();
   }
 
   @override
@@ -58,10 +79,10 @@ class _HomeState extends State<Home> {
         centerTitle: true,
       ),
       body: ListView.builder(
-        itemCount: todoList.length,
+        itemCount: db.todoList.length,
         itemBuilder: (context, index) => ToDoTile(
-          todoItem: todoList[index][0],
-          isCompleted: todoList[index][1],
+          todoItem: db.todoList[index][0],
+          isCompleted: db.todoList[index][1],
           onChanged: (value) => onTapped(value, index),
           onPressed: (context) => deleteTask(index),
         ),
