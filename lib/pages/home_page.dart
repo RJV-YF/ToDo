@@ -35,6 +35,12 @@ class _HomeState extends State<Home> {
     Navigator.of(context).pop();
   }
 
+  void deleteTask(index) {
+    setState(() {
+      todoList.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,6 +63,7 @@ class _HomeState extends State<Home> {
           todoItem: todoList[index][0],
           isCompleted: todoList[index][1],
           onChanged: (value) => onTapped(value, index),
+          onPressed: (context) => deleteTask(index),
         ),
       ),
       floatingActionButton: FloatingActionButton(
