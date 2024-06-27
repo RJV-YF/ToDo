@@ -36,7 +36,7 @@ class ToDoTile extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: Colors.deepPurple.shade400,
+            color: Colors.yellow.shade400,
           ),
           child: Row(
             children: [
@@ -50,7 +50,7 @@ class ToDoTile extends StatelessWidget {
                     ? '${todoItem.substring(0, 20)} ...'
                     : todoItem,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 18,
                   decoration: isCompleted
                       ? TextDecoration.lineThrough

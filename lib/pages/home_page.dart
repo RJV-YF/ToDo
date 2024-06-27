@@ -65,15 +65,15 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurple.shade300,
+      backgroundColor: Colors.yellow.shade200,
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple.shade500,
+        backgroundColor: Colors.yellow.shade400,
         title: const Text(
           'T o  D o',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontWeight: FontWeight.bold,
-            fontSize: 18,
+            fontSize: 22,
           ),
         ),
         centerTitle: true,
@@ -89,6 +89,8 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButton: FloatingActionButton(
         shape: const CircleBorder(),
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
         onPressed: () {
           showDialog(
             context: context,
@@ -102,7 +104,7 @@ class _HomeState extends State<Home> {
         },
         child: const Icon(
           Icons.add,
-          color: Colors.black,
+          color: Colors.white,
         ),
       ),
     );
