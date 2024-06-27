@@ -47,12 +47,16 @@ class _HomeState extends State<Home> {
 
   // save new todo
   void saveNewTodo() {
-    setState(() {
-      db.todoList.add([controller.text, false]);
-    });
-    controller.clear();
-    Navigator.of(context).pop();
-    db.updateDatabase();
+    if (controller.text.trim() != '') {
+      setState(() {
+        db.todoList.add([controller.text, false]);
+      });
+      controller.clear();
+      Navigator.of(context).pop();
+      db.updateDatabase();
+    } else {
+      Navigator.pop(context);
+    }
   }
 
   void deleteTask(index) {
